@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I.T.S-Group Database Search Engine</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      padding: 20px;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-container {
+      margin-bottom: 30px;
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .logo-container img {
+      max-width: 200px;
+      height: auto;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container img:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: white;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      animation: slideDown 0.8s ease;
+      letter-spacing: 1px;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.2em;
+      margin-bottom: 40px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    button {
+      background: white;
+      color: #1e3c72;
+      padding: 18px 40px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 600;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+      animation: buttonAppear 0.6s ease backwards;
+    }
+
+    button:nth-child(1) { animation-delay: 0.2s; }
+    button:nth-child(2) { animation-delay: 0.4s; }
+    button:nth-child(3) { animation-delay: 0.6s; }
+    button:nth-child(4) { animation-delay: 0.8s; }
+
+    @keyframes buttonAppear {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(30, 60, 114, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      color: #2a5298;
+    }
+
+    button:active {
+      transform: translateY(-2px);
+    }
+
+    .icon {
+      font-size: 24px;
+      margin-right: 10px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover .icon {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 15s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+      }
+      25% {
+        transform: translateY(-100px) translateX(100px);
+      }
+      50% {
+        transform: translateY(-200px) translateX(-100px);
+      }
+      75% {
+        transform: translateY(-100px) translateX(100px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8em;
+      }
+
+      button {
+        padding: 15px 30px;
+        font-size: 16px;
+      }
+
+      .logo-container img {
+        max-width: 150px;
+      }
+    }
+
+    .footer {
+      margin-top: 50px;
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      animation: fadeIn 2s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <div class="logo-container">
+      <img src="logo.png" alt="I.T.S-Group Logo" onerror="this.style.display='none'">
+    </div>
+
+    <h1>I.T.S-Group Database</h1>
+    <p class="subtitle">Choose Your Database</p>
+
+    <div class="button-container">
+      <button onclick="navigateTo('vendors.html')">
+        <span class="icon">📦</span>
+        Vendors Database
+      </button>
+      <button onclick="navigateTo('hot_vendors.html')">
+        <span class="icon">🔥</span>
+        Hot Vendors Database
+      </button>
+      <button onclick="navigateTo('clients.html')">
+        <span class="icon">👥</span>
+        Clients Database
+      </button>
+      <button onclick="navigateTo('insights.html')">
+        <span class="icon">📊</span>
+        Client Insights
+      </button>
+    </div>
+
+    <div class="footer">
+      2025 I.T.S-Group | Powered by Advanced Database Solutions
+    </div>
+  </div>
+
+  <script>
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 15 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    function navigateTo(page) {
+      const container = document.querySelector('.container');
+      container.style.animation = 'fadeOut 0.5s ease forwards';
+
+      setTimeout(() => {
+        window.location.href = page;
+      }, 500);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeOut {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0; transform: scale(0.9); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '1') navigateTo('vendors.html');
+      if (e.key === '2') navigateTo('hot_vendors.html');
+      if (e.key === '3') navigateTo('clients.html');
+      if (e.key === '4') navigateTo('insights.html');
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      const moveX = (e.clientX - window.innerWidth / 2) / 50;
+      const moveY = (e.clientY - window.innerHeight / 2) / 50;
+
+      const logo = document.querySelector('.logo-container img');
+      if (logo && logo.style.display !== 'none') {
+        logo.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      }
+    });
+  </script>
+</body>
+</html>
